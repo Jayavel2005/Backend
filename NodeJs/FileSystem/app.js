@@ -11,6 +11,21 @@ const fs = require("fs");
 // });
 
 // sync file reading
-const data = fs.readFileSync("E:/NodeJS/Backend/NodeJs/FileSystem/sample.txt","utf8");
+// const data = fs.readFileSync("E:/NodeJS/Backend/NodeJs/FileSystem/sample.txt","utf8");
 
-console.log(data);
+// console.log(data);
+
+// async file writing
+
+fs.writeFile("E:/NodeJS/Backend/NodeJs/FileSystem/output.txt", 'Hello, I am from file writing', (err) => {
+    if (err) {
+        console.log(err.message);
+        return
+    }
+    console.log("File written succesfully!");
+
+})
+
+// sync file writing
+
+fs.writeFileSync("E:/NodeJS/Backend/NodeJs/FileSystem/output.txt", "Vanakam da Mapla!");
