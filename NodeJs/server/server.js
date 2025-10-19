@@ -12,6 +12,9 @@
 // });
 
 const http = require("http");
+const route = require("./routes");
+const { url } = require("inspector");
+const path = require("path");
 
 
 const server = http.createServer((req, res) => {
@@ -56,17 +59,35 @@ const server = http.createServer((req, res) => {
     // }
 
     // handling query parametres
-    if (req.method === "GET" && req.url.startsWith('/search')) {
-        const queryParams = req.url.split('?')[1];
-        console.log(queryParams);
-        const username = new URLSearchParams(queryParams).get("username");
-        const password = new URLSearchParams(queryParams).get("password");
-        res.writeHead(200, { "content-type": "application/json" });
-        res.write(JSON.stringify({ username, password }));
-        res.end();
+    // // if (req.method === "GET" && req.url.startsWith('/search')) {
+    // //     const queryParams = req.url.split('?')[1];
+    // //     console.log(queryParams);
+    // //     const username = new URLSearchParams(queryParams).get("username");
+    // //     const password = new URLSearchParams(queryParams).get("password");
+    // //     res.writeHead(200, { "content-type": "application/json" });
+    // //     res.write(JSON.stringify({ username, password }));
+    // //     console.log(route);
+
+    // //     res.end();
 
 
+    // }
+    const parsedUrl = new URL(req.url, `http://${req.headers.host}`);
+    const path = parsedUrl.pathname;
+
+    // // Check if the route exists
+    if (route[path]) {
+        route[path](req, res);
+    } else if (path.startsWith('/user/')) {
+        const userId = path.split('/')[2];
+        route.useRoute(req, res, userId);
+
+    } else {
+        route["not-found"](req, res);
     }
+
+
+
 });
 
 const PORT = 3000;
