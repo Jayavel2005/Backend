@@ -16,6 +16,9 @@ const route = require("./routes");
 const { url } = require("inspector");
 const path = require("path");
 
+const middleWare = (req, res, next) => {
+    next(req, res);
+}
 
 const server = http.createServer((req, res) => {
     // if (req.method === "GET" && req.url === "/") {
@@ -72,19 +75,23 @@ const server = http.createServer((req, res) => {
 
 
     // }
-    const parsedUrl = new URL(req.url, `http://${req.headers.host}`);
-    const path = parsedUrl.pathname;
 
-    // // Check if the route exists
-    if (route[path]) {
-        route[path](req, res);
-    } else if (path.startsWith('/user/')) {
-        const userId = path.split('/')[2];
-        route.useRoute(req, res, userId);
 
-    } else {
-        route["not-found"](req, res);
-    }
+    middleWare(req, res, (req, res) => {
+        const parsedUrl = new URL(req.url, `http://${req.headers.host}`);
+        const path = parsedUrl.pathname;
+
+        // // Check if the route exists
+        if (route[path]) {
+            route[path](req, res);
+        } else if (path.startsWith('/user/')) {
+            const userId = path.split('/')[2];
+            route.useRoute(req, res, userId);
+
+        } else {
+            route["not-found"](req, res);
+        }
+    })
 
 
 
