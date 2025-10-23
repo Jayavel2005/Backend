@@ -1,0 +1,17 @@
+{
+  "name": "pollapp",
+  "version": "1.0.0",
+  "description": "a simple poll app server",
+  "license": "ISC",
+  "author": "jayavel",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "dev" : "nodemon index.js"
+    
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
