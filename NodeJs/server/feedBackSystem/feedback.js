@@ -42,7 +42,7 @@ const server = http.createServer((req, res) => {
         });
 
         req.on("end", () => {
-            const parsedBody = Buffer.concat(body).toString();
+            const parsedBody = Buffer.concat(body).toString( );
 
             // Read file safely
             let raw = fs.readFileSync(filePath, "utf-8");
