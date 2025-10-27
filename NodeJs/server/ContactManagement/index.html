@@ -10,12 +10,9 @@
 <body>
     <div>
         <h1>Add Contact to the Contacts Register</h1>
-        <form action="/addContact" method="post">
-            <label for="name" style="display:inline-block; width:100px;">Name:</label>
-            <input type="text" id="name" name="name" style="margin-right:20px;"><br>
-            <label for="phone" style="display:inline-block; width:100px;">Phone:</label>
-            <input type="text" id="phone" name="phone"><br><br>
-            <input type="submit" value="Add Contact">
+        <form action="/deleteContact" method="POST">
+            <input type="hidden" name="id" value=`{}`>
+            <button type="submit">Delete</button>
         </form>
     </div>
 </body>
