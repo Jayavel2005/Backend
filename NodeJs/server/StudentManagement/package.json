@@ -13,5 +13,8 @@
   "type": "commonjs",
   "dependencies": {
     "nodemon": "^3.1.10"
+  },
+  "devDependencies": {
+    "mongodb": "^6.20.0"
   }
 }
