@@ -376,6 +376,7 @@ const server = http.createServer((req, res) => {
     else if (req.url.startsWith("/edit-contact-page") && req.method === "GET") {
         const query = new URL(req.url, `http://${req.headers.host}`).searchParams
         const id = query.get("id");
+        
         console.log(id);
 
         const contacts = getContacts();

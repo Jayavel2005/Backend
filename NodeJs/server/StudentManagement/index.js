@@ -156,15 +156,15 @@ const server = http.createServer(async (req, res) => {
         Add Student
     </h1>
     <form action="/addStudent" method="POST" style="display: flex; flex-direction: column; gap: 15px;">
-        <input type="number" id="rollNo" name="rollNo" placeholder="Enter Roll Number"
+        <input type="number" id="rollNo" required name="rollNo" placeholder="Enter Roll Number"
             style="padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 15px; outline: none; transition: border 0.3s ease;"
             onfocus="this.style.border='1px solid #27ae60'" onblur="this.style.border='1px solid #ccc'">
         
-        <input type="text" id="name" name="name" placeholder="Enter Student Name"
+        <input type="text" id="name" required name="name" placeholder="Enter Student Name"
             style="padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 15px; outline: none; transition: border 0.3s ease;"
             onfocus="this.style.border='1px solid #27ae60'" onblur="this.style.border='1px solid #ccc'">
         
-        <input type="text" id="department" name="department" placeholder="Enter Department"
+        <input type="text" id="department" required name="department" placeholder="Enter Department"
             style="padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 15px; outline: none; transition: border 0.3s ease;"
             onfocus="this.style.border='1px solid #27ae60'" onblur="this.style.border='1px solid #ccc'">
         
