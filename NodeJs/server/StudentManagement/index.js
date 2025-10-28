@@ -20,25 +20,33 @@ const server = http.createServer(async (req, res) => {
     if (url === "/" && method === "GET") {
         const statusCode = 200;
         res.writeHead(statusCode, { "content-type": "text/html" });
-        const html = `<div style="display:flex; justify-content:center; align-items:center; height:100vh; font-family:Arial, sans-serif; background-color:#f8f9fa;">
+        const html = `
+                    <div style="display:flex; justify-content:center; align-items:center; height:100vh; font-family:Arial, sans-serif; background-color:#f8f9fa;">
                         <div style="text-align:center;">
-                            <h1 style="color:#2c3e50; font-size:32px; margin-bottom:30px;">
+                            <h1 style="color:#2c3e50; font-size:32px; margin-bottom:20px;">
                                 Welcome to Student Management System
                             </h1>
+
+                            <!-- Added image here -->
+                            <img src="https://cdn-icons-png.flaticon.com/512/3135/3135755.png" 
+                                alt="Student Icon"
+                                style="width:160px; height:160px; object-fit:cover; border-radius:50%; margin-bottom:30px; box-shadow:0 4px 15px rgba(0,0,0,0.2);">
+
                             <div>
                                 <a href="/view-students-page" 
-                                style="display:inline-block; margin:10px; padding:12px 24px; text-decoration:none; 
-                                        background-color:#3498db; color:white; border-radius:8px; font-weight:bold;">
-                                View Students
+                                    style="display:inline-block; margin:10px; padding:12px 24px; text-decoration:none; 
+                                            background-color:#3498db; color:white; border-radius:8px; font-weight:bold; transition:background 0.3s;">
+                                    View Students
                                 </a>
                                 <a href="/add-students-page" 
-                                style="display:inline-block; margin:10px; padding:12px 24px; text-decoration:none; 
-                                        background-color:#2ecc71; color:white; border-radius:8px; font-weight:bold;">
-                                Add Students
+                                    style="display:inline-block; margin:10px; padding:12px 24px; text-decoration:none; 
+                                            background-color:#2ecc71; color:white; border-radius:8px; font-weight:bold; transition:background 0.3s;">
+                                    Add Student
                                 </a>
                             </div>
                         </div>
-                    </div>`
+                    </div>`;
+
 
         res.write(html)
         res.end();
@@ -73,68 +81,100 @@ const server = http.createServer(async (req, res) => {
                                             <td style="padding: 12px; border: 1px solid #ddd;">${student.rollNo}</td>
                                             <td style="padding: 12px; border: 1px solid #ddd;">${student.name}</td>
                                             <td style="padding: 12px; border: 1px solid #ddd;">${student.department}</td>
-                                            <td><form action="/deleteStudent" method="GET" 
-                                                style="display: inline-block; margin: 10px; text-align: center;">
-                                                
-                                                <input type="hidden" value=${student.rollNo} name="rollNo" id="rollNo">
-                                                
-                                                <button type="submit"
-                                                    style="background: linear-gradient(90deg, #e74c3c, #c0392b);
-                                                        color: white;
-                                                        border: none;
-                                                        padding: 10px 20px;
-                                                        border-radius: 6px;
-                                                        font-size: 15px;
-                                                        cursor: pointer;
-                                                        box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-                                                        transition: all 0.3s ease;"
-                                                    onmouseover="this.style.background='linear-gradient(90deg, #ff6b6b, #e74c3c)'"
-                                                    onmouseout="this.style.background='linear-gradient(90deg, #e74c3c, #c0392b)'"
-                                                    onmousedown="this.style.transform='scale(0.95)'"
-                                                    onmouseup="this.style.transform='scale(1)'">
-                                                   Delete
-                                                </button>
-                                            </form>
+                                            <td style="text-align: center; padding: 12px; border: 1px solid #ddd;">
+                                                                <!-- Delete Button -->
+                                                <form action="/deleteStudent" method="GET" 
+                                                    style="display: inline-block; margin: 6px; text-align: center;">
+                                                    
+                                                    <input type="hidden" value="${student.rollNo}" name="rollNo" id="rollNo">
+
+                                                    <button type="submit"
+                                                        style="
+                                                            background: linear-gradient(90deg, #e74c3c, #c0392b);
+                                                            color: white;
+                                                            border: none;
+                                                            padding: 10px 22px;
+                                                            border-radius: 8px;
+                                                            font-size: 15px;
+                                                            font-weight: 500;
+                                                            cursor: pointer;
+                                                            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+                                                            transition: all 0.3s ease;
+                                                        "
+                                                        onmouseover="this.style.background='linear-gradient(90deg, #ff7675, #e74c3c)'"
+                                                        onmouseout="this.style.background='linear-gradient(90deg, #e74c3c, #c0392b)'"
+                                                        onmousedown="this.style.transform='scale(0.95)'"
+                                                        onmouseup="this.style.transform='scale(1)'">
+                                                        Delete
+                                                    </button>
+                                                </form>
+
+                                                <!-- Update Button -->
+                                                <form action="/update-student-page" method="GET" 
+                                                    style="display: inline-block; margin: 6px; text-align: center;">
+                                                    
+                                                    <input type="hidden" value="${student.rollNo}" name="rollNo" id="rollNo">
+
+                                                    <button type="submit"
+                                                        style="
+                                                            background: linear-gradient(90deg, #f39c12, #e67e22);
+                                                            color: white;
+                                                            border: none;
+                                                            padding: 10px 22px;
+                                                            border-radius: 8px;
+                                                            font-size: 15px;
+                                                            font-weight: 500;
+                                                            cursor: pointer;
+                                                            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+                                                            transition: all 0.3s ease;
+                                                        "
+                                                        onmouseover="this.style.background='linear-gradient(90deg, #f5b041, #f39c12)'"
+                                                        onmouseout="this.style.background='linear-gradient(90deg, #f39c12, #e67e22)'"
+                                                        onmousedown="this.style.transform='scale(0.95)'"
+                                                        onmouseup="this.style.transform='scale(1)'">
+                                                        Update
+                                                    </button>
+                                                </form>
                                             </td>
                                         </tr>
-                                    `).join('')}
-                                </tbody>
-                            </table>
+                                                `).join('')}
+                                            </tbody>
+                                        </table>
 
-                            <p style="margin-top: 20px; color: #7f8c8d; font-size: 14px;">
-                                Total Students: <strong>${students.length}</strong>
-                            </p>
+                                        <p style="margin-top: 20px; color: #7f8c8d; font-size: 14px;">
+                                            Total Students: <strong>${students.length}</strong>
+                                        </p>
 
-                            <a href="/"
-                                style="
-                                    display: inline-block;
-                                    text-decoration: none;
-                                    background: linear-gradient(90deg, #3498db, #2980b9);
-                                    color: white;
-                                    padding: 10px 20px;
-                                    border-radius: 6px;
-                                    font-size: 16px;
-                                    font-weight: 500;
-                                    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-                                    transition: all 0.3s ease;
-                                    margin-top: 20px;
-                                "
-                                onmouseover="this.style.background='linear-gradient(90deg, #5dade2, #3498db)'"
-                                onmouseout="this.style.background='linear-gradient(90deg, #3498db, #2980b9)'"
-                                onmousedown="this.style.transform='scale(0.95)'"
-                                onmouseup="this.style.transform='scale(1)'">
-                                Back to Home </a>
+                                        <a href="/"
+                                            style="
+                                                display: inline-block;
+                                                text-decoration: none;
+                                                background: linear-gradient(90deg, #3498db, #2980b9);
+                                                color: white;
+                                                padding: 10px 20px;
+                                                border-radius: 6px;
+                                                font-size: 16px;
+                                                font-weight: 500;
+                                                box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+                                                transition: all 0.3s ease;
+                                                margin-top: 20px;
+                                            "
+                                            onmouseover="this.style.background='linear-gradient(90deg, #5dade2, #3498db)'"
+                                            onmouseout="this.style.background='linear-gradient(90deg, #3498db, #2980b9)'"
+                                            onmousedown="this.style.transform='scale(0.95)'"
+                                            onmouseup="this.style.transform='scale(1)'">
+                                            Back to Home </a>
 
-                        </div>
+                                    </div>
 
-                        <script>
-                            // Add simple hover effect inline using JS
-                            document.querySelectorAll('tbody tr').forEach(row => {
-                                row.addEventListener('mouseover', () => row.style.backgroundColor = '#e8f8f5');
-                                row.addEventListener('mouseout', () => row.style.backgroundColor = '#f8f9fa');
-                            });
-                        </script>
-                        `;
+                                    <script>
+                                        // Add simple hover effect inline using JS
+                                        document.querySelectorAll('tbody tr').forEach(row => {
+                                            row.addEventListener('mouseover', () => row.style.backgroundColor = '#e8f8f5');
+                                            row.addEventListener('mouseout', () => row.style.backgroundColor = '#f8f9fa');
+                                        });
+                                    </script>
+                                    `;
 
 
             res.write(html);
@@ -173,6 +213,25 @@ const server = http.createServer(async (req, res) => {
             Add Student
         </button>
     </form>
+    <a href="/"
+    style="
+        display: inline-block;
+        text-decoration: none;
+        background: linear-gradient(90deg, #3498db, #2980b9);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 6px;
+        font-size: 16px;
+        font-weight: 500;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        margin-top: 20px;
+    "
+    onmouseover="this.style.background='linear-gradient(90deg, #5dade2, #3498db)'"
+    onmouseout="this.style.background='linear-gradient(90deg, #3498db, #2980b9)'"
+    onmousedown="this.style.transform='scale(0.95)'"
+    onmouseup="this.style.transform='scale(1)'">
+    Back to Home </a>
 </div>
 `
         res.write(html);
@@ -226,6 +285,72 @@ const server = http.createServer(async (req, res) => {
         res.writeHead(302, { "location": "/view-students-page" });
         res.end();
 
+    }
+    else if (url.startsWith("/update-student-page") && method === "GET") {
+        const query = new URL(url, `http://${req.headers.host}`);
+        const rollNo = query.searchParams.get("rollNo");
+        try {
+            await mongodb.connect();
+            const db = mongodb.db(dbName);
+            const collection = db.collection(collectionName);
+            const student = await collection.findOne({ rollNo: rollNo });
+            const statusCode = 200;
+            res.writeHead(statusCode, { "content-type": "text/html" });
+            const html = `<div style="font-family: 'Segoe UI', Arial, sans-serif; width: 400px; margin: 80px auto; padding: 30px; border-radius: 12px; background-color: #f8f9fa; box-shadow: 0 4px 20px rgba(0,0,0,0.1); text-align: center;">
+                            <h1 style="color: #2c3e50; background-color: #dff9fb; padding: 15px; border-radius: 8px; font-size: 24px; margin-bottom: 25px; letter-spacing: 1px;">
+                                Update Student Details
+                            </h1>
+                            <form action="/updateStudent" method="POST" style="display: flex; flex-direction: column; gap: 15px;">
+                                <input type="number" id="rollNo" required name="rollNo" placeholder="Enter Roll Number" value="${student.rollNo}"
+                                    style="padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 15px; outline: none; transition: border 0.3s ease;"
+                                    onfocus="this.style.border='1px solid #27ae60'" onblur="this.style.border='1px solid #ccc'">
+                                
+                                <input type="text" id="name" required name="name" placeholder="Enter Student Name" value="${student.name}"
+                                    style="padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 15px; outline: none; transition: border 0.3s ease;"
+                                    onfocus="this.style.border='1px solid #27ae60'" onblur="this.style.border='1px solid #ccc'">
+                                
+                                <input type="text" id="department" required name="department" placeholder="Enter Department" value="${student.department}"
+                                    style="padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 15px; outline: none; transition: border 0.3s ease;"
+                                    onfocus="this.style.border='1px solid #27ae60'" onblur="this.style.border='1px solid #ccc'">
+                                
+                                <button type="submit"
+                                    style="background: linear-gradient(90deg, #16a085, #27ae60); color: white; border: none; padding: 12px; border-radius: 6px; font-size: 16px; cursor: pointer; transition: background 0.3s ease;">
+                                    Update Student
+                                </button>
+                            </form>
+                        </div>`
+            res.write(html);
+            res.end();
+        } catch (error) {
+            console.log(`${error}`);
+        } finally {
+            await mongodb.close();
+        }
+    }
+    else if (url === '/updateStudent' && method === "POST") {
+        const body = []
+        req.on("data", (chunk) => {
+            body.push(chunk);
+        })
+
+        req.on("end", async () => {
+            const parsedBody = querystring.parse(Buffer.concat(body).toString());
+            try {
+                await mongodb.connect();
+                const db = mongodb.db(dbName);
+                const collection = db.collection(collectionName)
+                await collection.updateOne({ rollNo: parsedBody.rollNo }, { $set: { rollNo: parsedBody.rollNo, name: parsedBody.name, department: parsedBody.department } });
+                console.log("Student updated successfully");
+                const statusCode = 302;
+                res.writeHead(statusCode, { "location": "/view-students-page" });
+                res.end();
+            } catch (error) {
+                console.log(error);
+
+            } finally {
+                await mongodb.close();
+            }
+        })
     }
 })
 const PORT = 3000;
