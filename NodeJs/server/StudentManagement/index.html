@@ -10,11 +10,9 @@
 <body>
     <div>
         <h1>Add Student</h1>
-        <form action="/addStudent">
-            <input type="number" id="rollNo" name="rollNo">
-            <input type="text" id="name" name="name">
-            <input type="text" id="department" name="department">
-            <button type="submit">Add Student</button>
+        <form action="/updateStudent" method="get">
+            <input type="hidden" value=${student.id} name="rollNo" id="rollNo">;
+            <button type="submit">Delete</button>
         </form>
     </div>
 </body>

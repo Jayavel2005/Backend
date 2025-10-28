@@ -3,15 +3,13 @@ const http = require("http");
 const querystring = require("querystring");
 const { MongoClient } = require("mongodb");
 const { parse } = require("path");
+const { URL } = require("url");
 
 
 const url = `mongodb://localhost:27017/`
 const mongodb = new MongoClient(url);
 const dbName = "students";
 const collectionName = "it";
-
-
-
 
 const server = http.createServer(async (req, res) => {
     const url = req.url;
@@ -65,6 +63,8 @@ const server = http.createServer(async (req, res) => {
                                         <th style="padding: 14px; border: 1px solid #ddd;">Roll Number</th>
                                         <th style="padding: 14px; border: 1px solid #ddd;">Name</th>
                                         <th style="padding: 14px; border: 1px solid #ddd;">Department</th>
+                                        <th style="padding: 14px; border: 1px solid #ddd;"></th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -73,6 +73,29 @@ const server = http.createServer(async (req, res) => {
                                             <td style="padding: 12px; border: 1px solid #ddd;">${student.rollNo}</td>
                                             <td style="padding: 12px; border: 1px solid #ddd;">${student.name}</td>
                                             <td style="padding: 12px; border: 1px solid #ddd;">${student.department}</td>
+                                            <td><form action="/deleteStudent" method="GET" 
+                                                style="display: inline-block; margin: 10px; text-align: center;">
+                                                
+                                                <input type="hidden" value=${student.rollNo} name="rollNo" id="rollNo">
+                                                
+                                                <button type="submit"
+                                                    style="background: linear-gradient(90deg, #e74c3c, #c0392b);
+                                                        color: white;
+                                                        border: none;
+                                                        padding: 10px 20px;
+                                                        border-radius: 6px;
+                                                        font-size: 15px;
+                                                        cursor: pointer;
+                                                        box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+                                                        transition: all 0.3s ease;"
+                                                    onmouseover="this.style.background='linear-gradient(90deg, #ff6b6b, #e74c3c)'"
+                                                    onmouseout="this.style.background='linear-gradient(90deg, #e74c3c, #c0392b)'"
+                                                    onmousedown="this.style.transform='scale(0.95)'"
+                                                    onmouseup="this.style.transform='scale(1)'">
+                                                   Delete
+                                                </button>
+                                            </form>
+                                            </td>
                                         </tr>
                                     `).join('')}
                                 </tbody>
@@ -81,6 +104,27 @@ const server = http.createServer(async (req, res) => {
                             <p style="margin-top: 20px; color: #7f8c8d; font-size: 14px;">
                                 Total Students: <strong>${students.length}</strong>
                             </p>
+
+                            <a href="/"
+                                style="
+                                    display: inline-block;
+                                    text-decoration: none;
+                                    background: linear-gradient(90deg, #3498db, #2980b9);
+                                    color: white;
+                                    padding: 10px 20px;
+                                    border-radius: 6px;
+                                    font-size: 16px;
+                                    font-weight: 500;
+                                    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+                                    transition: all 0.3s ease;
+                                    margin-top: 20px;
+                                "
+                                onmouseover="this.style.background='linear-gradient(90deg, #5dade2, #3498db)'"
+                                onmouseout="this.style.background='linear-gradient(90deg, #3498db, #2980b9)'"
+                                onmousedown="this.style.transform='scale(0.95)'"
+                                onmouseup="this.style.transform='scale(1)'">
+                                Back to Home</a>
+
                         </div>
 
                         <script>
@@ -103,7 +147,8 @@ const server = http.createServer(async (req, res) => {
         finally {
             mongodb.close();
         }
-    } else if (url === '/add-students-page' && method === "GET") {
+    }
+    else if (url === '/add-students-page' && method === "GET") {
         const statusCode = 200;
         res.writeHead(statusCode, { "content-type": "text/html" });
         const html = `<div style="font-family: 'Segoe UI', Arial, sans-serif; width: 400px; margin: 80px auto; padding: 30px; border-radius: 12px; background-color: #f8f9fa; box-shadow: 0 4px 20px rgba(0,0,0,0.1); text-align: center;">
@@ -154,12 +199,33 @@ const server = http.createServer(async (req, res) => {
                 console.log(error);
             }
             finally {
-                mongodb.close();
+                await mongodb.close();
             }
             res.writeHead(302, { "location": "/view-students-page" });
             res.end();
 
         })
+    } else if (url.startsWith("/deleteStudent") && method === 'GET') {
+        const query = new URL(url, `http://${req.headers.host}`);
+        const rollNo = query.searchParams.get("rollNo");
+        console.log(typeof rollNo);
+
+        try {
+            await mongodb.connect();
+            const db = mongodb.db(dbName);
+            const collection = db.collection(collectionName);
+            await collection.deleteOne({ rollNo: rollNo });
+            console.log("Student deleted successfully");
+        } catch (error) {
+            console.log(error);
+
+        } finally {
+            await mongodb.close();
+        }
+
+        res.writeHead(302, { "location": "/view-students-page" });
+        res.end();
+
     }
 })
 const PORT = 3000;
