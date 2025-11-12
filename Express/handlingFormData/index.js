@@ -1,7 +1,9 @@
 import express from "express";
 import route from "./routers.js";
 
-const app = express();
+const app = express()
+
+app.use(express.urlencoded({ extended: true }));
 
 
 const PORT = 3000;
