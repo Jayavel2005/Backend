@@ -17,3 +17,18 @@ export const uploadFile = (req, res) => {
 
     res.status(201).send(`file uploaded and the file name is ${req.file.originalname}`);
 }
+
+export const multipleFileUploads = (req, res) => {
+    console.log(req.body);
+    console.log(req.files);
+
+    res.status(201).send("multiple files uploaded");
+
+}
+
+
+export const uploadImages = (req, res) => {
+    console.log(req.files);
+    res.status(201).send("multiple images uploaded");
+
+}
