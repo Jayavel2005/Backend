@@ -3,7 +3,15 @@ export const defaultRoute = (req, res) => {
 }
 
 export const createuser = (req, res) => {
-    console.log(req.body.email);
+    console.log(req.body);
 
     res.status(201).send("form recieved");
+}
+
+export const uploadFile = (req, res) => {
+    console.log(req.body);
+    console.log(req.file);
+
+
+    res.status(201).send(`file uploaded and the file name is ${req.file.originalname}`);
 }

@@ -1,14 +1,12 @@
 import express from "express";
 import route from "./routers.js";
+import multer from "multer";
 
 const app = express()
-
-app.use(express.urlencoded({ extended: true }));
-
-
+const upload = multer();
 const PORT = 3000;
-
-
+app.use(express.urlencoded({ extended: true }));
+app.use(upload.single('image'));
 app.use(route);
 
 app.listen(PORT, () => {
