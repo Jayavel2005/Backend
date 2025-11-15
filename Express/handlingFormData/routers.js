@@ -1,8 +1,7 @@
 import { Router } from "express";
 import { createuser, defaultRoute, multipleFileUploads, uploadFile, uploadImages } from "./controllers.js";
-import multer from "multer";
+import upload from "./multerController.js";
 
-const upload = multer();
 
 const route = Router();
 

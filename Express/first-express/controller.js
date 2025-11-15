@@ -1,5 +1,6 @@
 export const defultController = (req, res) => {
-    res.send('Hello World');
+    const userName = "Jayavel";
+    res.render('index', { userName })
 }
 
 export const usernameController = (req, res) => {

@@ -3,13 +3,11 @@ import route from "./routes.js";
 
 const app = express();
 const PORT = 3000;
-
+app.set("view engine", "ejs");
 app.use(express.json())
-app.use((req, res, next) => {
-    console.log(`New request received + ${req.url} ${req.method} + ${ Date.now()}`);
-    next();
+app.use(express.static("public"));
+app.use(express.static("images"))
 
-})
 app.use(route);
 
 app.listen(PORT, () => {
