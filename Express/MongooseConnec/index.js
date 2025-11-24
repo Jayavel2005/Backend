@@ -1,12 +1,13 @@
 import dotenv from "dotenv"
 dotenv.config();
+import cookieParser from "cookie-parser";
 import express from "express"
-import connectDB from "./config/db.js";
+
 import route from "./routes.js";
 
 const app = express();
+app.use(cookieParser());
 app.use(express.json());
-await connectDB();
 
 app.use(route)
 
