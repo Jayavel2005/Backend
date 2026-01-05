@@ -1,14 +1,16 @@
 import jwt from "jsonwebtoken";
-import { JWT_SECRET } from "../config/env.js";
+import { JWT_SECRET_ACCESS_TOKEN, JWT_SECRET_REFRESH_TOKEN } from "../config/env.js";
 
-export const generateToken = (payload) => {
+export const generateToken = (payload, secret) => {
   console.log(payload);
 
-  const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "1d" });
-  return token;
+  return jwt.sign(payload, secret, { expiresIn: "1d" });
 };
 
-export const verifyToken = (token) => {
-  const verify = jwt.verify(token, JWT_SECRET);
-  return verify;
+export const verifyAccessToken = (token) => {
+  return jwt.verify(token, JWT_SECRET_ACCESS_TOKEN);
+};
+
+export const verifyRefreshToken = (token) => {
+  return jwt.verify(token, JWT_SECRET_REFRESH_TOKEN);
 };
