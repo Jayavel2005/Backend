@@ -1,6 +1,5 @@
 import { Router } from "express";
 import {
-  createUser,
   deleteUser,
   getAllUsers,
   getUserById,
@@ -11,7 +10,6 @@ import { authMiddleware } from "../middlewares/auth.middleware.js";
 const userRouter = Router();
 
 // create user.
-userRouter.post("/", createUser);
 
 userRouter.get("/", authMiddleware, getAllUsers);
 
