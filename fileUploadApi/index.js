@@ -1,7 +1,5 @@
 import express from "express";
-import multer from "multer";
-
-const upload = multer({ dest: "uploads/" });
+import upload from "./upload.js";
 
 const app = express();
 
@@ -12,7 +10,7 @@ app.get("/", (req, res) => {
 });
 
 app.post("/image", upload.single("image"), (req, res) => {
-  res.status(200).json({ message: "file uploaded" });
+  res.status(200).json({ message: "file uploaded", data: req.file });
 });
 
 app.post("/images", upload.array("images", 10), (req, res) => {
