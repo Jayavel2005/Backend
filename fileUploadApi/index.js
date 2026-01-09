@@ -1,5 +1,6 @@
 import express from "express";
 import upload from "./upload.js";
+import { errorMiddleware } from "./error.middleware.js";
 
 const app = express();
 
@@ -14,8 +15,11 @@ app.post("/image", upload.single("image"), (req, res) => {
 });
 
 app.post("/images", upload.array("images", 10), (req, res) => {
-  res.status(200).json({ message: "files uploaded" });
+  res.status(200).json({ message: "files uploaded", data: req.files });
 });
+
+app.use(errorMiddleware);
+
 app.listen(3000, () => {
   console.log(`Server is running on http://localhost:3000`);
 });
